@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "FilmVault"
 include(":app")
+include(":feature:home:ui")
+include(":core:common")
+include(":core:navigation_api")
