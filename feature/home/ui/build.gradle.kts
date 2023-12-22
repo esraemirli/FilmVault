@@ -43,10 +43,12 @@ android {
 dependencies {
     implementation(project(":core:navigation_api"))
     implementation(project(":core:common"))
+    implementation(project(":feature:home:domain"))
 
     implementation(Android.core)
     implementation(Android.appCompat)
     implementation(Android.androidMaterial)
+    implementation("androidx.compose.material3:material3:1.1.2")
     testImplementation(TestImplementation.junit)
     androidTestImplementation(AndroidTestImplementation.junit)
     androidTestImplementation(AndroidTestImplementation.espresso)
@@ -57,5 +59,8 @@ dependencies {
     kapt(DaggerHilt.hiltCompiler)
 
     implementation(JetpackCompose.navigation)
+    implementation(JetpackCompose.composeMaterial3)
+    implementation(JetpackCompose.composeBom)
     implementation(JetpackCompose.composeMaterial)
+    implementation(Image.coil)
 }
