@@ -66,6 +66,7 @@ dependencies {
     implementation(JetpackCompose.composeUiGraphics)
     implementation(JetpackCompose.composeToolingPreview)
     implementation(JetpackCompose.composeMaterial3)
+    implementation(JetpackCompose.composeMaterial)
     implementation(JetpackCompose.navigation)
 
     testImplementation(TestImplementation.junit)

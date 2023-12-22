@@ -144,3 +144,6 @@ replay_pid*
 /buildSrc/.gradle/8.0/fileChanges/last-build.bin
 /buildSrc/.gradle/8.0/checksums/md5-checksums.bin
 /buildSrc/.gradle/8.0/checksums/sha1-checksums.bin
+/.idea/assetWizardSettings.xml
+/.idea/modules/core/common/FilmVault.core.common.main.iml
+/.idea/modules.xml
