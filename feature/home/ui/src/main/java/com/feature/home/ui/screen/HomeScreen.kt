@@ -2,6 +2,7 @@ package com.feature.home.ui.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.feature.home.domain.model.HomeUiModel
 import com.feature.home.domain.model.MovieUiModel
@@ -40,7 +40,7 @@ import com.feature.home.ui.R
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    navHostController: NavHostController
+    navigateToMovieDetail: (Int) -> Unit
 ) {
     val state = viewModel.movieList.collectAsState()
 
@@ -48,7 +48,14 @@ fun HomeScreen(
         is HomeState.Loading -> Text(text = "LOADING")
         is HomeState.Content -> {
             val uiModel = (state.value as HomeState.Content).uiModel
-            uiModel?.let { Content(uiModel) }
+            uiModel?.let {
+                Content(
+                    uiModel = uiModel,
+                    onMovieClicked = { movieId ->
+                        navigateToMovieDetail(movieId)
+                    }
+                )
+            }
         }
 
         is HomeState.Error -> {
@@ -60,7 +67,8 @@ fun HomeScreen(
 
 @Composable
 fun Content(
-    uiModel: HomeUiModel
+    uiModel: HomeUiModel,
+    onMovieClicked: (Int) -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -74,10 +82,10 @@ fun Content(
         uiModel.swimlanes.forEachIndexed { index, swimlaneUiModel ->
 
             if (index == MovieCategory.UP_COMING.ordinal) {
-                UpComingMovies(swimlaneUiModel.movies)
+                UpComingMovies(swimlaneUiModel.movies, onMovieClicked)
 
             } else {
-                SwimlaneMovies(swimlaneUiModel)
+                SwimlaneMovies(swimlaneUiModel, onMovieClicked)
             }
         }
     }
@@ -85,7 +93,8 @@ fun Content(
 
 @Composable
 fun SwimlaneMovies(
-    swimlaneUiModel: SwimlaneUiModel
+    swimlaneUiModel: SwimlaneUiModel,
+    onMovieClicked: (Int) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -116,7 +125,8 @@ fun SwimlaneMovies(
                 modifier = Modifier
                     .size(width = 150.dp, height = 200.dp)
                     .padding(end = 8.dp)
-                    .clip(shape = RoundedCornerShape(20.dp)),
+                    .clip(shape = RoundedCornerShape(20.dp))
+                    .clickable { onMovieClicked(movie.id) },
                 placeholder = painterResource(id = R.drawable.baseline_movie),
                 model = movie.poster,
                 contentDescription = null,
@@ -129,14 +139,18 @@ fun SwimlaneMovies(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UpComingMovies(
-    movieUiModels: List<MovieUiModel>
+    movieUiModels: List<MovieUiModel>,
+    onMovieClicked: (Int) -> Unit
 ) {
     val pagerState = rememberPagerState { movieUiModels.size }
 
     HorizontalPager(state = pagerState) { index ->
         val movie = movieUiModels[index]
 
-        Box(modifier = Modifier.wrapContentSize()) {
+        Box(modifier = Modifier
+            .wrapContentSize()
+            .clickable { onMovieClicked(movie.id) }
+        ) {
 
             AsyncImage(
                 modifier = Modifier

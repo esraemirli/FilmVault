@@ -14,8 +14,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -68,21 +70,28 @@ fun NavigationBottomBar(navController: NavHostController, navigationProvider: Na
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        val bottomItems = listOf(Screen.Home, Screen.Search, Screen.Favorite, Screen.Profile)
-
-        bottomItems.forEach { item ->
+        Screen.entries.forEach { tab ->
             BottomNavigationItem(
-                selected = currentRoute == item.route,
+                selected = currentRoute?.contains(tab.route) ?: false,
                 selectedContentColor = Color.Red,
                 unselectedContentColor = Color.White,
                 onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.startDestinationId)
-                        launchSingleTop = true
+                    if (currentRoute != tab.route) {
+                        if (currentRoute?.contains(tab.route) == true) {
+                            navController.popBackStack()
+                        } else {
+                            navController.navigate(tab.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
                     }
                 },
-                icon = { Icon(item.icon, null) },
-                label = { Text(item.label) }
+                icon = { Icon(tab.icon, null) },
+                label = { Text(tab.label) }
             )
         }
     }

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.feature.home.ui"
+    namespace = "com.feature.movie_detail.ui"
     compileSdk = 34
 
     defaultConfig {
@@ -15,6 +15,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
+
     buildFeatures {
         viewBinding = true
         compose = true
@@ -22,6 +23,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Version.kotlinCompilerExtensionVersion
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -41,9 +43,9 @@ android {
 }
 
 dependencies {
+
     implementation(project(":core:navigation_api"))
     implementation(project(":core:common"))
-    implementation(project(":feature:home:domain"))
 
     implementation(Android.core)
     implementation(Android.appCompat)
@@ -52,10 +54,10 @@ dependencies {
     androidTestImplementation(AndroidTestImplementation.junit)
     androidTestImplementation(AndroidTestImplementation.espresso)
 
-
     implementation(DaggerHilt.hilt)
     implementation(DaggerHilt.hiltComposeNavigation)
     kapt(DaggerHilt.hiltCompiler)
+
 
     implementation(JetpackCompose.navigation)
     implementation(JetpackCompose.composeMaterial3)
