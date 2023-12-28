@@ -147,3 +147,5 @@ replay_pid*
 /.idea/assetWizardSettings.xml
 /.idea/modules/core/common/FilmVault.core.common.main.iml
 /.idea/modules.xml
+/.idea/modules/app/FilmVault.app.iml
+/.idea/modules/feature/movie_detail/ui/FilmVault.feature.movie_detail.ui.iml

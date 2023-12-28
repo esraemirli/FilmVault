@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.feature.movie_detail.ui"
+    namespace = "com.feature.movie_detail.domain"
     compileSdk = 34
 
     defaultConfig {
@@ -14,14 +14,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Version.kotlinCompilerExtensionVersion
     }
 
     buildTypes {
@@ -43,11 +35,9 @@ android {
 }
 
 dependencies {
-
-    implementation(project(":core:navigation_api"))
     implementation(project(":core:common"))
-    implementation(project(":feature:movie_detail:domain"))
-
+    implementation(project(":feature:movie_detail:data"))
+    implementation(project(":core:network"))
 
     implementation(Android.core)
     implementation(Android.appCompat)
@@ -57,13 +47,6 @@ dependencies {
     androidTestImplementation(AndroidTestImplementation.espresso)
 
     implementation(DaggerHilt.hilt)
-    implementation(DaggerHilt.hiltComposeNavigation)
     kapt(DaggerHilt.hiltCompiler)
-
-
-    implementation(JetpackCompose.navigation)
-    implementation(JetpackCompose.composeMaterial3)
-    implementation(JetpackCompose.composeBom)
-    implementation(JetpackCompose.composeMaterial)
-    implementation(Image.coil)
+    implementation(Coroutines.coroutines)
 }
