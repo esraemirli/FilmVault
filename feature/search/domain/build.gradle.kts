@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.core.common"
+    namespace = "com.feature.search.domain"
     compileSdk = 34
 
     defaultConfig {
@@ -36,6 +36,10 @@ android {
 
 dependencies {
 
+    implementation(project(":core:common"))
+    implementation(project(":feature:search:data"))
+    implementation(project(":core:network"))
+
     implementation(Android.core)
     implementation(Android.appCompat)
     implementation(Android.androidMaterial)
@@ -43,7 +47,6 @@ dependencies {
     androidTestImplementation(AndroidTestImplementation.junit)
     androidTestImplementation(AndroidTestImplementation.espresso)
 
-    implementation(JetpackCompose.composeMaterial)
     implementation(DaggerHilt.hilt)
     kapt(DaggerHilt.hiltCompiler)
     implementation(Coroutines.coroutines)

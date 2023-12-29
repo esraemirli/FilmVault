@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.core.common"
+    namespace = "com.feature.search.ui"
     compileSdk = 34
 
     defaultConfig {
@@ -15,7 +15,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
-
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Version.kotlinCompilerExtensionVersion
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -36,6 +42,10 @@ android {
 
 dependencies {
 
+    implementation(project(":core:navigation_api"))
+    implementation(project(":core:common"))
+    implementation(project(":feature:search:domain"))
+
     implementation(Android.core)
     implementation(Android.appCompat)
     implementation(Android.androidMaterial)
@@ -43,8 +53,14 @@ dependencies {
     androidTestImplementation(AndroidTestImplementation.junit)
     androidTestImplementation(AndroidTestImplementation.espresso)
 
-    implementation(JetpackCompose.composeMaterial)
+
     implementation(DaggerHilt.hilt)
+    implementation(DaggerHilt.hiltComposeNavigation)
     kapt(DaggerHilt.hiltCompiler)
-    implementation(Coroutines.coroutines)
+
+    implementation(JetpackCompose.navigation)
+    implementation(JetpackCompose.composeMaterial3)
+    implementation(JetpackCompose.composeBom)
+    implementation(JetpackCompose.composeMaterial)
+    implementation(Image.coil)
 }

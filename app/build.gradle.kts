@@ -55,6 +55,7 @@ dependencies {
 
     implementation(project(":feature:home:ui"))
     implementation(project(":feature:movie_detail:ui"))
+    implementation(project(":feature:search:ui"))
     implementation(project(":core:common"))
     implementation(project(":core:navigation_api"))
 

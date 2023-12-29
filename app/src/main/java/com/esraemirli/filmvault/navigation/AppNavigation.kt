@@ -20,6 +20,11 @@ fun AppNavGraph(navController: NavHostController, navigationProvider: Navigation
             api = navigationProvider.movieDetail,
             navController = navController
         )
+
+        register(
+            api = navigationProvider.search,
+            navController = navController
+        )
     }
 }
 
